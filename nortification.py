@@ -5,9 +5,16 @@ import os
 
 date = datetime.datetime.now()
 
-blog_link = [https://note.com/kira_se/n/nd9706317963d,https://note.com/horiday018/all,https://note.com/tsukishimacoffee/all,
-https://note.com/mypro1/all,https://note.com/manunitact/all,https://note.com/akisuke0925/all,https://note.com/hitohira_aka_2/all,
-https://note.com/kotyatv/all,https://note.linuc.org/all]
+blog_link = ["https://note.com/kira_se/n/nd9706317963d","https://note.com/horiday018/all","https://note.com/tsukishimacoffee/all",
+"https://note.com/mypro1/all","https://note.com/manunitact/all","https://note.com/akisuke0925/all","https://note.com/hitohira_aka_2/all",
+"https://note.com/kotyatv/all"]
+
+for link in blog_link:
+  response = requests.get(link)
+  soup = BeautifulSoup(response.content, "html.parser")
+  articles = soup.find_all('div', class_= "o-contentNote__forMobile")
+  for article in articles:
+      print(article.getText())
 
 response = requests.get(url)
 soup = BeautifulSoup(response.text, 'lxml')
