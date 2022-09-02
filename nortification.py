@@ -20,6 +20,12 @@ for link in blog_link:
   title = soup.find_all('h3', class_= "o-textNote__title")
   pinned = soup.find('div', class_= "o-timelinePinnedNote o-timelineNoteItem__pinned")
   links = soup.find_all('a', class_ = "o-textNote__link a-link")
+ 
+  for element in date:
+    if element.text == "8時間前":
+        message_body()
+    else:
+        continue
 
 def send_line_message(nortification_message):
   line_notify_token = 'g8Rp8p1MUCiMQRs4SEsVfgPbqUVo6HB5FtyYWT2dbJW'
