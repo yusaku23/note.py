@@ -12,6 +12,21 @@ blog_link = [
   , "https://note.com/kotyatv/all"
 ]
 
+def message_body():
+  url = "https://note.com"
+    nortification_text = "⭐️Noteが更新されました！⭐️"
+    if data['pinned'] == None:
+      send_line_message(f"\r{nortification_text}\r\r『{data['person'].getText()}』\r\r{data['title'][0].getText()}\r{url + data['links'][0].get('href')}")
+    else:
+      send_line_message(f"\r{nortification_text}\r\r『{data['person'].getText()}』\r\r{data['title'][1].getText()}\r{url + data['links'][1].get('href')}")
+     
+def send_line_message(nortification_message):
+  line_notify_token = 'g8Rp8p1MUCiMQRs4SEsVfgPbqUVo6HB5FtyYWT2dbJW'
+  line_notify_api = 'https://notify-api.line.me/api/notify'
+  headers = {'Authorization': f'Bearer {line_notify_token}'}
+  data = {'message': {notification_message}}
+  requests.post(line_notify_api, headers = headers, data = data)    
+     
 for link in blog_link:
   response = requests.get(link)
   soup = BeautifulSoup(response.content, "html.parser")
@@ -27,12 +42,3 @@ for link in blog_link:
     else:
         continue
 
-def send_line_message(nortification_message):
-  line_notify_token = 'g8Rp8p1MUCiMQRs4SEsVfgPbqUVo6HB5FtyYWT2dbJW'
-  line_notify_api = 'https://notify-api.line.me/api/notify'
-  headers = {'Authorization': f'Bearer {line_notify_token}'}
-  data = {'message': {notification_message}}
-  requests.post(line_notify_api, headers = headers, data = data)
-  
-def message_body():
-  send_line_message(f"【Noteが更新されました！】\r\r『{person.getText()}』\r\r{title[0].getText()}")
