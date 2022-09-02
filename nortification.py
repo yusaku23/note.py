@@ -1,9 +1,5 @@
 import requests
 from bs4 import BeautifulSoup
-import datetime
-import os
-
-date = datetime.datetime.now()
 
 blog_link = [
   "https://note.com/kira_se/all"
@@ -24,10 +20,6 @@ for link in blog_link:
   title = soup.find_all('h3', class_= "o-textNote__title")
   pinned = soup.find('div', class_= "o-timelinePinnedNote o-timelineNoteItem__pinned")
   links = soup.find_all('a', class_ = "o-textNote__link a-link")
-
-
-response = requests.get(url)
-soup = BeautifulSoup(response.text, 'lxml')
 
 def send_line_message(nortification_message):
   line_notify_token = 'g8Rp8p1MUCiMQRs4SEsVfgPbqUVo6HB5FtyYWT2dbJW'
