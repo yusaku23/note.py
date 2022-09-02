@@ -27,18 +27,21 @@ def send_line_message(nortification_message):
   data = {'message': {notification_message}}
   requests.post(line_notify_api, headers = headers, data = data)    
      
-for link in blog_link:
-  response = requests.get(link)
-  soup = BeautifulSoup(response.content, "html.parser")
-  person = soup.find('div', class_= "o-timelineFooter__name")
-  date = soup.find_all('div', class_= "o-timelineFooter__date") 
-  title = soup.find_all('h3', class_= "o-textNote__title")
-  pinned = soup.find('div', class_= "o-timelinePinnedNote o-timelineNoteItem__pinned")
-  links = soup.find_all('a', class_ = "o-textNote__link a-link")
- 
-  for element in date:
-    if element.text == "8時間前":
-        message_body()
-    else:
+def exec():
+  data = {}
+  for link in blog_link:
+    response = requests.get(link)
+    soup = BeautifulSoup(response.content, "html.parser")
+    date = soup.find_all('div', class_= "o-timelineFooter__date") 
+
+    data['person'] = soup.find('div', class_= "o-timelineFooter__name")
+    data['title'] = soup.find_all('h3', class_= "o-textNote__title")
+    data['pinned'] = soup.find('div', class_= "o-timelinePinnedNote o-timelineNoteItem__pinned")
+    data['links'] = soup.find_all('a', class_ = "o-textNote__link a-link")
+
+    for element in date:
+      if element.text == "1時間前":
+        message_body(data)
+      else:
         continue
 
