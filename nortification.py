@@ -19,9 +19,12 @@ blog_link = [
 for link in blog_link:
   response = requests.get(link)
   soup = BeautifulSoup(response.content, "html.parser")
-  articles = soup.find_all('div', class_= "o-contentNote__forMobile")
-  for article in articles:
-      print(article.getText())
+  person = soup.find('div', class_= "o-timelineFooter__name")
+  date = soup.find_all('div', class_= "o-timelineFooter__date") 
+  title = soup.find_all('h3', class_= "o-textNote__title")
+  pinned = soup.find('div', class_= "o-timelinePinnedNote o-timelineNoteItem__pinned")
+  links = soup.find_all('a', class_ = "o-textNote__link a-link")
+
 
 response = requests.get(url)
 soup = BeautifulSoup(response.text, 'lxml')
@@ -34,4 +37,4 @@ def send_line_message(nortification_message):
   requests.post(line_notify_api, headers = headers, data = data)
   
 def message_body():
-  send_line_message(f"【Noteが更新されました！】")
+  send_line_message(f"【Noteが更新されました！】\r\r『{person.getText()}』\r\r{title[0].getText()}")
